@@ -13,12 +13,10 @@ namespace Repositorio.Web.Controllers
 {
     public class JogadorController : Controller
     {
-        //private readonly ContextoAcessoBanco _context;
         private readonly IUnitOfWork _unitOfWork;
 
         public JogadorController(ContextoAcessoBanco context, IUnitOfWork unitOfWork)
         {
-            //_context = context;
             _unitOfWork = unitOfWork;
         }
 
@@ -29,15 +27,15 @@ namespace Repositorio.Web.Controllers
         }
 
         // GET: Jogadors/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var jogador = await _context.Jogadores
-                .SingleOrDefaultAsync(m => m.JogadorId == id);
+            var jogador = _unitOfWork.Jogadores.Get(id);
+
             if (jogador == null)
             {
                 return NotFound();
@@ -57,26 +55,28 @@ namespace Repositorio.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("JogadorId,Nome")] Jogador jogador)
+        public IActionResult Create([Bind("JogadorId,Nome")] Jogador jogador)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(jogador);
-                await _context.SaveChangesAsync();
+                _unitOfWork.Jogadores.Add(jogador);
+                _unitOfWork.Commit();
+
                 return RedirectToAction(nameof(Index));
             }
             return View(jogador);
         }
 
         // GET: Jogadors/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var jogador = await _context.Jogadores.SingleOrDefaultAsync(m => m.JogadorId == id);
+            var jogador = _unitOfWork.Jogadores.Get(id);
+
             if (jogador == null)
             {
                 return NotFound();
@@ -89,7 +89,7 @@ namespace Repositorio.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("JogadorId,Nome")] Jogador jogador)
+        public IActionResult Edit(int id, [Bind("JogadorId,Nome")] Jogador jogador)
         {
             if (id != jogador.JogadorId)
             {
@@ -100,8 +100,8 @@ namespace Repositorio.Web.Controllers
             {
                 try
                 {
-                    _context.Update(jogador);
-                    await _context.SaveChangesAsync();
+                    _unitOfWork.Jogadores.Update(jogador);
+                    _unitOfWork.Commit();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -116,19 +116,20 @@ namespace Repositorio.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             return View(jogador);
         }
 
         // GET: Jogadors/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var jogador = await _context.Jogadores
-                .SingleOrDefaultAsync(m => m.JogadorId == id);
+            var jogador = _unitOfWork.Jogadores.Get(id);
+
             if (jogador == null)
             {
                 return NotFound();
@@ -140,17 +141,18 @@ namespace Repositorio.Web.Controllers
         // POST: Jogadors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var jogador = await _context.Jogadores.SingleOrDefaultAsync(m => m.JogadorId == id);
-            _context.Jogadores.Remove(jogador);
-            await _context.SaveChangesAsync();
+            var jogador = _unitOfWork.Jogadores.Get(id);
+            _unitOfWork.Jogadores.Remove(jogador);
+            _unitOfWork.Commit();
+
             return RedirectToAction(nameof(Index));
         }
 
         private bool JogadorExists(int id)
         {
-            return _context.Jogadores.Any(e => e.JogadorId == id);
+            return (_unitOfWork.Jogadores.Get(id) != null);
         }
     }
 }
