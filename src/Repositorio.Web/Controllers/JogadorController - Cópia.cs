@@ -7,25 +7,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Repositorio.AcessoBanco.Contextos;
 using Repositorio.AcessoBanco.Entidades;
-using Repositorio.AcessoBanco.Repositorios.UnitOfWork;
 
 namespace Repositorio.Web.Controllers
 {
     public class JogadorController : Controller
     {
-        //private readonly ContextoAcessoBanco _context;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ContextoAcessoBanco _context;
 
-        public JogadorController(ContextoAcessoBanco context, IUnitOfWork unitOfWork)
+        public JogadorController(ContextoAcessoBanco context)
         {
-            //_context = context;
-            _unitOfWork = unitOfWork;
+            _context = context;
         }
 
         // GET: Jogadors
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_unitOfWork.Jogadores.GetAll());
+            return View(await _context.Jogadores.ToListAsync());
         }
 
         // GET: Jogadors/Details/5

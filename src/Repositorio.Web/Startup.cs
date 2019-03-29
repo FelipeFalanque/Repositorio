@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Repositorio.AcessoBanco.Contextos;
+using Repositorio.AcessoBanco.Repositorios.UnitOfWork;
 
 namespace Repositorio.Web
 {
@@ -21,6 +22,7 @@ namespace Repositorio.Web
         {
             services.AddDbContext<ContextoAcessoBanco>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
