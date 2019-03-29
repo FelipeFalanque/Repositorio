@@ -5,11 +5,11 @@ VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - UI", "01 - UI", "{EDBC6BE9-25B2-453B-83E8-01EC7FDE43E6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 -DAL", "02 -DAL", "{580F4006-986B-4E2B-8320-915D82B0ED15}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - DAL", "02 - DAL", "{580F4006-986B-4E2B-8320-915D82B0ED15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositorio.Web", "src\Repositorio.Web\Repositorio.Web.csproj", "{62473E63-3425-4A93-B3E5-096BC6595702}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositorio.Web", "src\Repositorio.Web\Repositorio.Web.csproj", "{62473E63-3425-4A93-B3E5-096BC6595702}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositorio.AcessoBanco", "src\Repositorio.AcessoBanco\Repositorio.AcessoBanco.csproj", "{EA0A2D87-EDA0-40FD-AA5B-356EF7067236}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositorio.AcessoBanco", "src\Repositorio.AcessoBanco\Repositorio.AcessoBanco.csproj", "{EA0A2D87-EDA0-40FD-AA5B-356EF7067236}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
