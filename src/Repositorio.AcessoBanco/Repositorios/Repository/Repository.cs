@@ -19,10 +19,6 @@ namespace Repositorio.AcessoBanco.Repositorios.Repository
 
         public TEntity Get(int? id)
         {
-            // aqui estamos trabalhando com o DbContext, e não com ArtistaContext 
-            // assim não temos objteos DBSet
-            // como Artistas e ArtistaDetalhes, e precisamos usar um método
-            // genérico Set() para fazer o acesso
             return _dbSet.Find(id);
         }
 
